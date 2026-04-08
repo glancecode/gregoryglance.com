@@ -189,8 +189,8 @@ button { cursor: pointer; background: none; border: none; font: inherit; color: 
 
 /* Hero photo */
 .hero-photo {
-  width: 100px;
-  height: 100px;
+  width: 160px;
+  height: 160px;
   border-radius: 50%;
   object-fit: cover;
   object-position: center top;
