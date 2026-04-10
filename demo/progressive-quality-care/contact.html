@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us — Progressive Quality Care</title>
+  <meta name="description" content="Contact Progressive Quality Care for information about skilled nursing, rehabilitation, memory care, admissions, or career opportunities. Call (330) 995-0094.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;0,8..60,700;1,8..60,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="./base.css">
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <a href="#main-content" class="skip-link">Skip to main content</a>
+
+  <div class="demo-bar">This is a design prototype — not the live website</div>
+
+  <header class="site-header">
+    <div class="container header-inner">
+      <a href="./index.html" class="logo" aria-label="Progressive Quality Care — Home">
+        <svg class="logo-icon" viewBox="0 0 40 40" fill="none" aria-hidden="true">
+          <path d="M20 4L4 14v18a4 4 0 004 4h24a4 4 0 004-4V14L20 4z" stroke="currentColor" stroke-width="2.5" fill="none"/>
+          <path d="M20 14v12M14 20h12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M14 36V24a6 6 0 0112 0v12" stroke="currentColor" stroke-width="2.5" fill="none"/>
+        </svg>
+        <div class="logo-text">Progressive<span>Quality Care</span></div>
+      </a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <ul>
+          <li><a href="./index.html">Home</a></li>
+          <li><a href="./locations.html">Locations</a></li>
+          <li><a href="./services.html">Services</a></li>
+          <li><a href="./careers.html">Careers</a></li>
+          <li><a href="./contact.html" aria-current="page">Contact</a></li>
+        </ul>
+      </nav>
+      <a href="tel:3309950094" class="header-phone" aria-label="Call us at (330) 995-0094">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6 19.79 19.79 0 01-3.07-8.67A2 2 0 014.11 2h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 16.92z"/></svg>
+        (330) 995-0094
+      </a>
+      <button class="mobile-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-nav">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+      </button>
+    </div>
+  </header>
+
+  <div class="mobile-nav" id="mobile-nav" role="dialog" aria-label="Mobile navigation">
+    <div class="mobile-nav-header">
+      <div class="logo-text" style="color: var(--color-primary);">Progressive<span>Quality Care</span></div>
+      <button class="mobile-nav-close" aria-label="Close menu">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <ul>
+      <li><a href="./index.html">Home</a></li>
+      <li><a href="./locations.html">Locations</a></li>
+      <li><a href="./services.html">Services</a></li>
+      <li><a href="./careers.html">Careers</a></li>
+      <li><a href="./contact.html">Contact</a></li>
+      <li><a href="tel:3309950094" class="nav-cta">Call (330) 995-0094</a></li>
+    </ul>
+  </div>
+
+  <main id="main-content">
+    <!-- Page Hero -->
+    <section class="detail-hero">
+      <div class="container">
+        <h1 style="font-family: var(--font-display); font-size: var(--text-2xl); font-weight: 700; margin-bottom: var(--space-4);">Get in Touch</h1>
+        <p style="font-size: var(--text-base); opacity: 0.9; max-width: 55ch; line-height: 1.7;">Have questions about our services, locations, or career opportunities? We're here to help.</p>
+      </div>
+    </section>
+
+    <!-- Contact Form + Info -->
+    <section class="section">
+      <div class="container">
+        <div class="contact-grid">
+          <!-- Left: Form -->
+          <div>
+            <h2 style="font-family: var(--font-display); font-size: var(--text-lg); font-weight: 600; margin-bottom: var(--space-6);">Send Us a Message</h2>
+            <form id="contact-form" novalidate>
+              <div class="form-group">
+                <label for="full-name">Full Name</label>
+                <input type="text" id="full-name" name="full-name" autocomplete="name" required>
+              </div>
+              <div class="form-group">
+                <label for="email">Email</label>
+                <input type="email" id="email" name="email" autocomplete="email" required>
+              </div>
+              <div class="form-group">
+                <label for="phone">Phone <span style="font-weight: 400; color: var(--color-text-faint);">(optional)</span></label>
+                <input type="tel" id="phone" name="phone" autocomplete="tel">
+              </div>
+              <div class="form-group">
+                <label for="inquiry-type">Inquiry Type</label>
+                <select id="inquiry-type" name="inquiry-type" required>
+                  <option value="">Select an option</option>
+                  <option value="general">General Inquiry</option>
+                  <option value="admissions">Admissions Information</option>
+                  <option value="careers">Career Opportunities</option>
+                  <option value="other">Other</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="message">Message</label>
+                <textarea id="message" name="message" rows="5" required></textarea>
+              </div>
+              <p class="form-note mb-6">This is a prototype form for demonstration purposes. No data is collected or stored.</p>
+              <button type="submit" class="btn btn-primary">Submit Inquiry</button>
+            </form>
+          </div>
+
+          <!-- Right: Contact Info -->
+          <div>
+            <h2 style="font-family: var(--font-display); font-size: var(--text-lg); font-weight: 600; margin-bottom: var(--space-6);">Contact Information</h2>
+            <div class="contact-info-block">
+              <!-- Corporate Office -->
+              <div class="contact-method">
+                <div class="contact-method-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                </div>
+                <div>
+                  <h3>Corporate Office</h3>
+                  <p>Progressive Quality Care</p>
+                  <p>Aurora, OH</p>
+                  <a href="tel:3309950094">(330) 995-0094</a>
+                </div>
+              </div>
+
+              <!-- Email -->
+              <div class="contact-method">
+                <div class="contact-method-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                </div>
+                <div>
+                  <h3>Email</h3>
+                  <a href="mailto:info@progressivequalitycare.com">info@progressivequalitycare.com</a>
+                  <p style="font-style: italic; font-size: var(--text-xs); color: var(--color-text-faint); margin-top: var(--space-1);">Demo email address</p>
+                </div>
+              </div>
+
+              <!-- Hours -->
+              <div class="contact-method">
+                <div class="contact-method-icon">
+                  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+                </div>
+                <div>
+                  <h3>Office Hours</h3>
+                  <p>Monday – Friday</p>
+                  <p>8:00 AM – 5:00 PM EST</p>
+                </div>
+              </div>
+
+              <!-- Facility link -->
+              <div style="background: var(--color-surface-2); border-radius: var(--radius-lg); padding: var(--space-5); margin-top: var(--space-4);">
+                <p style="font-size: var(--text-sm); color: var(--color-text-muted); margin-bottom: var(--space-3); line-height: 1.6;"><strong style="color: var(--color-text);">Looking for a specific facility?</strong> Each of our 14 locations has its own contact information and team ready to assist you.</p>
+                <a href="./locations.html" class="location-card-link">View All Locations <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="section" style="background: var(--color-surface-2);">
+      <div class="container">
+        <div class="section-header">
+          <div class="section-label">Common Questions</div>
+          <h2 class="section-title">Frequently Asked Questions</h2>
+        </div>
+        <div style="max-width: 740px;">
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              How quickly will I hear back?
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-answer">
+              <p>Our team aims to respond to all inquiries within one business day. For urgent matters related to admissions, we recommend calling the facility directly, as our admissions teams are available to assist you immediately.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              Can I schedule a tour online?
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-answer">
+              <p>Yes, you can request a facility tour through this contact form or by calling the specific facility you'd like to visit. Simply select "Admissions Information" as your inquiry type and include your preferred date and location in your message.</p>
+            </div>
+          </div>
+          <div class="faq-item">
+            <button class="faq-question" aria-expanded="false">
+              Who do I contact about careers?
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
+            </button>
+            <div class="faq-answer">
+              <p>For career inquiries, select "Career Opportunities" in the contact form or visit our <a href="./careers.html">Careers page</a> to view current openings. You can also contact any facility directly to inquire about available positions at that specific location.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo-text">Progressive<span>Quality Care</span></div>
+          <p>Family-owned skilled nursing, rehabilitation, and memory care across 14 facilities in Ohio and Michigan. Committed to dignity, comfort, and clinical excellence since 2015.</p>
+        </div>
+        <div class="footer-column">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="./index.html">Home</a></li>
+            <li><a href="./locations.html">Locations</a></li>
+            <li><a href="./services.html">Services</a></li>
+            <li><a href="./careers.html">Careers</a></li>
+            <li><a href="./contact.html">Contact</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Services</h4>
+          <ul>
+            <li><a href="./services.html">Skilled Nursing</a></li>
+            <li><a href="./services.html">Short-Term Rehab</a></li>
+            <li><a href="./services.html">Memory Care</a></li>
+            <li><a href="./services.html">Respite Care</a></li>
+            <li><a href="./services.html">Long-Term Care</a></li>
+          </ul>
+        </div>
+        <div class="footer-column">
+          <h4>Contact</h4>
+          <ul>
+            <li><a href="tel:3309950094">(330) 995-0094</a></li>
+            <li><a href="mailto:info@progressivequalitycare.com">info@progressivequalitycare.com</a></li>
+            <li><span style="color: rgba(255,255,255,0.6); font-size: var(--text-sm);">Aurora, OH</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <span>&copy; 2026 Progressive Quality Care. All rights reserved.</span>
+        <div style="display: flex; gap: var(--space-6); flex-wrap: wrap;">
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Use</a>
+          <a href="#">Accessibility</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const toggle = document.querySelector('.mobile-toggle');
+      const closeBtn = document.querySelector('.mobile-nav-close');
+      const mobileNav = document.querySelector('.mobile-nav');
+      if (toggle && mobileNav) {
+        toggle.addEventListener('click', function() {
+          mobileNav.classList.add('is-open');
+          document.body.style.overflow = 'hidden';
+          closeBtn.focus();
+        });
+        closeBtn.addEventListener('click', function() {
+          mobileNav.classList.remove('is-open');
+          document.body.style.overflow = '';
+          toggle.focus();
+        });
+        mobileNav.addEventListener('click', function(e) {
+          if (e.target.tagName === 'A') {
+            mobileNav.classList.remove('is-open');
+            document.body.style.overflow = '';
+          }
+        });
+        document.addEventListener('keydown', function(e) {
+          if (e.key === 'Escape' && mobileNav.classList.contains('is-open')) {
+            mobileNav.classList.remove('is-open');
+            document.body.style.overflow = '';
+            toggle.focus();
+          }
+        });
+      }
+
+      // Contact form submit
+      var form = document.getElementById('contact-form');
+      if (form) {
+        form.addEventListener('submit', function(e) {
+          e.preventDefault();
+          alert('Thank you for your inquiry. This is a demo — no data has been submitted.');
+        });
+      }
+
+      // FAQ Accordion
+      document.querySelectorAll('.faq-question').forEach(function(btn) {
+        btn.addEventListener('click', function() {
+          const expanded = btn.getAttribute('aria-expanded') === 'true';
+          btn.setAttribute('aria-expanded', !expanded);
+          const answer = btn.nextElementSibling;
+          answer.classList.toggle('is-open');
+        });
+      });
+    });
+  </script>
+</body>
+</html>
