@@ -1,0 +1,24 @@
+# Local/system
+.DS_Store
+
+# Dependencies/build artifacts
+node_modules/
+dist/
+build/
+.cache/
+
+# Secrets and local config
+.env
+.env.*
+*.pem
+*.key
+*.p8
+
+# Raw slicer/user artifacts: keep these out unless explicitly reviewed
+*.3mf
+*.stl
+*.step
+*.3mf.zip
+
+# Logs
+*.log
