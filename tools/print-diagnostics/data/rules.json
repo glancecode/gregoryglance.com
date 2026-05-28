@@ -1,0 +1,484 @@
+{
+  "version": "free-mvp-2026-05-28",
+  "defects": [
+    {
+      "id": "stringing",
+      "name": "Stringing",
+      "summary": "Thin strands appear between travel moves or separate features.",
+      "questions": [
+        {
+          "id": "string_location",
+          "text": "Where do the strings show up most?",
+          "options": [
+            { "id": "gaps", "label": "Between open gaps or separate features" },
+            { "id": "seams", "label": "Mostly near seams or starts" },
+            { "id": "everywhere", "label": "Across the whole part" }
+          ]
+        },
+        {
+          "id": "temperature_change",
+          "text": "Did this start after changing filament or nozzle temperature?",
+          "options": [
+            { "id": "yes", "label": "Yes" },
+            { "id": "no", "label": "No" },
+            { "id": "unknown", "label": "Not sure" }
+          ]
+        },
+        {
+          "id": "retraction_status",
+          "text": "Is retraction enabled and known-good in this slicer profile?",
+          "options": [
+            { "id": "enabled", "label": "Enabled and usually works" },
+            { "id": "low", "label": "Disabled or very low" },
+            { "id": "unknown", "label": "Not sure" }
+          ]
+        }
+      ],
+      "causes": [
+        {
+          "title": "Retraction is too low or disabled",
+          "signals": ["string_location:gaps", "retraction_status:low", "retraction_status:unknown"]
+        },
+        {
+          "title": "Nozzle temperature is too high",
+          "signals": ["temperature_change:yes", "string_location:everywhere"]
+        },
+        {
+          "title": "Travel path or travel speed needs tuning",
+          "signals": ["string_location:gaps", "string_location:seams"]
+        }
+      ],
+      "actions": [
+        "Restore the printer-appropriate retraction default, then retest.",
+        "Lower nozzle temperature by 5 to 10 C if the filament still strings.",
+        "Increase travel speed or reduce travel over open gaps if your slicer exposes those controls."
+      ],
+      "guardrails": ["Flow rate", "Bed temperature", "First-layer settings unless the strings only appear on layer one"],
+      "calibration": "Retraction tower",
+      "notes": ["PETG and wet filament string more easily than PLA.", "Bowden printers usually need more retraction than direct-drive printers."]
+    },
+    {
+      "id": "first_layer",
+      "name": "Poor first layer adhesion",
+      "summary": "The print does not stick, peels up early, or leaves broken first-layer lines.",
+      "questions": [
+        {
+          "id": "line_shape",
+          "text": "What do the first-layer lines look like?",
+          "options": [
+            { "id": "round", "label": "Round and barely squished" },
+            { "id": "scraped", "label": "Transparent, scraped, or missing" },
+            { "id": "uneven", "label": "Good in some areas, bad in others" }
+          ]
+        },
+        {
+          "id": "bed_surface",
+          "text": "Has the build plate been cleaned recently?",
+          "options": [
+            { "id": "yes", "label": "Yes" },
+            { "id": "no", "label": "No" },
+            { "id": "unknown", "label": "Not sure" }
+          ]
+        },
+        {
+          "id": "bed_temp",
+          "text": "Is the bed temperature normal for this material?",
+          "options": [
+            { "id": "normal", "label": "Yes, normal" },
+            { "id": "low", "label": "Possibly too low" },
+            { "id": "unknown", "label": "Not sure" }
+          ]
+        }
+      ],
+      "causes": [
+        { "title": "Nozzle is too far from the bed", "signals": ["line_shape:round"] },
+        { "title": "Plate contamination or poor surface prep", "signals": ["bed_surface:no", "bed_surface:unknown"] },
+        { "title": "Uneven bed mesh or local Z offset issue", "signals": ["line_shape:uneven"] }
+      ],
+      "actions": [
+        "Wash the build plate with dish soap and warm water, then avoid touching the print area.",
+        "Adjust Z offset until lines are connected and lightly flattened.",
+        "Rerun bed mesh or automatic leveling if adhesion changes across the plate."
+      ],
+      "guardrails": ["Nozzle flow multiplier", "Infill", "Retraction"],
+      "calibration": "Single-layer first-layer square",
+      "notes": ["Smooth plates need clean surfaces more than textured PEI.", "ABS and ASA may also need enclosure temperature control."]
+    },
+    {
+      "id": "warping",
+      "name": "Warping",
+      "summary": "Corners or edges lift as the part cools.",
+      "questions": [
+        {
+          "id": "warp_timing",
+          "text": "When does lifting start?",
+          "options": [
+            { "id": "early", "label": "During the first few layers" },
+            { "id": "midprint", "label": "After the part gains height" },
+            { "id": "after", "label": "Mostly after cooling" }
+          ]
+        },
+        {
+          "id": "drafts",
+          "text": "Is the printer exposed to drafts or a cool room?",
+          "options": [
+            { "id": "yes", "label": "Yes" },
+            { "id": "no", "label": "No" },
+            { "id": "unknown", "label": "Not sure" }
+          ]
+        },
+        {
+          "id": "part_shape",
+          "text": "Is the part broad, flat, or sharp-cornered?",
+          "options": [
+            { "id": "broad", "label": "Yes, broad or flat" },
+            { "id": "small", "label": "Small footprint" },
+            { "id": "unknown", "label": "Not sure" }
+          ]
+        }
+      ],
+      "causes": [
+        { "title": "Cooling stress is pulling corners up", "signals": ["warp_timing:midprint", "drafts:yes", "part_shape:broad"] },
+        { "title": "First layer is not anchoring the part", "signals": ["warp_timing:early"] },
+        { "title": "Material needs more thermal control", "signals": ["warp_timing:after", "drafts:yes"] }
+      ],
+      "actions": [
+        "Add a brim and retest with the same model orientation.",
+        "Reduce part cooling for the early layers if the material allows it.",
+        "Shield the printer from drafts or use an enclosure for high-shrink materials."
+      ],
+      "guardrails": ["Retraction", "Nozzle diameter", "Acceleration"],
+      "calibration": "Corner-lift test square",
+      "notes": ["PLA usually warps from surface prep or drafts.", "ABS and ASA often require enclosure temperature control."]
+    },
+    {
+      "id": "under_extrusion",
+      "name": "Under-extrusion",
+      "summary": "Lines are thin, gaps appear, or the part looks starved for plastic.",
+      "questions": [
+        {
+          "id": "pattern",
+          "text": "Is the missing plastic constant or intermittent?",
+          "options": [
+            { "id": "constant", "label": "Constantly thin" },
+            { "id": "intermittent", "label": "Intermittent skips" },
+            { "id": "after_retractions", "label": "Mostly after retractions" }
+          ]
+        },
+        {
+          "id": "spool_path",
+          "text": "Can the spool and filament path move freely?",
+          "options": [
+            { "id": "yes", "label": "Yes" },
+            { "id": "drag", "label": "There may be drag" },
+            { "id": "unknown", "label": "Not sure" }
+          ]
+        },
+        {
+          "id": "nozzle_history",
+          "text": "Could the nozzle be partially clogged?",
+          "options": [
+            { "id": "likely", "label": "Likely" },
+            { "id": "unlikely", "label": "Unlikely" },
+            { "id": "unknown", "label": "Not sure" }
+          ]
+        }
+      ],
+      "causes": [
+        { "title": "Partial clog or restricted nozzle", "signals": ["pattern:intermittent", "nozzle_history:likely", "nozzle_history:unknown"] },
+        { "title": "Filament path drag", "signals": ["spool_path:drag", "spool_path:unknown"] },
+        { "title": "Retraction recovery is too aggressive", "signals": ["pattern:after_retractions"] }
+      ],
+      "actions": [
+        "Check spool movement and filament path before changing slicer settings.",
+        "Run a cold pull or nozzle cleaning routine if extrusion skips continue.",
+        "Raise nozzle temperature by 5 C only after ruling out drag or clogging."
+      ],
+      "guardrails": ["Random flow-rate increases", "Bed leveling", "Cooling changes"],
+      "calibration": "Single-wall extrusion test",
+      "notes": ["Grinding marks on filament point toward path drag or clogging.", "Flexible filament is especially sensitive to feed path resistance."]
+    },
+    {
+      "id": "over_extrusion",
+      "name": "Over-extrusion",
+      "summary": "Surfaces look swollen, ridges build up, or dimensions come out oversized.",
+      "questions": [
+        {
+          "id": "surface",
+          "text": "Where is the excess material most visible?",
+          "options": [
+            { "id": "walls", "label": "Outer walls" },
+            { "id": "top", "label": "Top surface" },
+            { "id": "first_layer", "label": "Mostly first layer" }
+          ]
+        },
+        {
+          "id": "profile_changed",
+          "text": "Was flow, extrusion multiplier, or filament profile changed recently?",
+          "options": [
+            { "id": "yes", "label": "Yes" },
+            { "id": "no", "label": "No" },
+            { "id": "unknown", "label": "Not sure" }
+          ]
+        },
+        {
+          "id": "dimensions",
+          "text": "Are measured dimensions oversized?",
+          "options": [
+            { "id": "yes", "label": "Yes" },
+            { "id": "no", "label": "No" },
+            { "id": "unknown", "label": "Not sure" }
+          ]
+        }
+      ],
+      "causes": [
+        { "title": "Flow multiplier is too high", "signals": ["profile_changed:yes", "dimensions:yes", "surface:walls"] },
+        { "title": "First layer is too squished", "signals": ["surface:first_layer"] },
+        { "title": "Top solid layers are accumulating excess material", "signals": ["surface:top"] }
+      ],
+      "actions": [
+        "Return flow or extrusion multiplier to the filament default, then retest.",
+        "If only layer one is swollen, raise Z offset slightly instead of changing global flow.",
+        "Run a single-wall flow calibration before making broad profile changes."
+      ],
+      "guardrails": ["Retraction", "Bed temperature", "Acceleration"],
+      "calibration": "Single-wall flow cube",
+      "notes": ["Dimensional checks matter more than visual texture alone.", "Do not fix elephant foot by lowering global flow unless the whole part is over-extruded."]
+    },
+    {
+      "id": "ringing",
+      "name": "Ringing / ghosting",
+      "summary": "Echo-like ripples appear after corners, text, or sharp direction changes.",
+      "questions": [
+        {
+          "id": "location",
+          "text": "Where are the echoes strongest?",
+          "options": [
+            { "id": "corners", "label": "After corners or sharp features" },
+            { "id": "all_walls", "label": "Across most walls" },
+            { "id": "one_axis", "label": "Mostly one axis" }
+          ]
+        },
+        {
+          "id": "speed",
+          "text": "Did this appear after increasing speed or acceleration?",
+          "options": [
+            { "id": "yes", "label": "Yes" },
+            { "id": "no", "label": "No" },
+            { "id": "unknown", "label": "Not sure" }
+          ]
+        },
+        {
+          "id": "mechanics",
+          "text": "Have belts, frame, or toolhead screws been checked recently?",
+          "options": [
+            { "id": "checked", "label": "Checked recently" },
+            { "id": "not_checked", "label": "Not checked" },
+            { "id": "unknown", "label": "Not sure" }
+          ]
+        }
+      ],
+      "causes": [
+        { "title": "Acceleration or jerk is too aggressive", "signals": ["location:corners", "speed:yes"] },
+        { "title": "Belt tension or mechanical looseness", "signals": ["location:one_axis", "mechanics:not_checked", "mechanics:unknown"] },
+        { "title": "Input-shaping profile needs calibration", "signals": ["location:all_walls", "speed:yes"] }
+      ],
+      "actions": [
+        "Reduce acceleration for outer walls and retest the same model.",
+        "Check belt tension and toolhead/frame fasteners, especially on the affected axis.",
+        "Run input shaping or resonance calibration if your printer supports it."
+      ],
+      "guardrails": ["Nozzle temperature", "Flow", "Retraction"],
+      "calibration": "Ringing tower or sharp-corner cube",
+      "notes": ["Ringing is mechanical or motion-related more often than material-related.", "A single-axis pattern is a strong clue."]
+    },
+    {
+      "id": "elephant_foot",
+      "name": "Elephant foot",
+      "summary": "The bottom layers bulge outward and make the part base oversized.",
+      "questions": [
+        {
+          "id": "layer_scope",
+          "text": "How many layers are affected?",
+          "options": [
+            { "id": "first_only", "label": "Mostly first layer" },
+            { "id": "first_few", "label": "First few layers" },
+            { "id": "whole_part", "label": "Most of the part is oversized" }
+          ]
+        },
+        {
+          "id": "z_offset",
+          "text": "Does the first layer look heavily squished?",
+          "options": [
+            { "id": "yes", "label": "Yes" },
+            { "id": "no", "label": "No" },
+            { "id": "unknown", "label": "Not sure" }
+          ]
+        },
+        {
+          "id": "bed_heat",
+          "text": "Is bed temperature higher than usual?",
+          "options": [
+            { "id": "yes", "label": "Yes" },
+            { "id": "no", "label": "No" },
+            { "id": "unknown", "label": "Not sure" }
+          ]
+        }
+      ],
+      "causes": [
+        { "title": "First layer is too close to the bed", "signals": ["layer_scope:first_only", "z_offset:yes"] },
+        { "title": "Bottom layers stay too soft", "signals": ["layer_scope:first_few", "bed_heat:yes"] },
+        { "title": "Global over-extrusion", "signals": ["layer_scope:whole_part"] }
+      ],
+      "actions": [
+        "Raise Z offset slightly if the first layer is overly compressed.",
+        "Lower bed temperature a small amount after adhesion is reliable.",
+        "Use slicer elephant-foot compensation for dimension-critical parts."
+      ],
+      "guardrails": ["Retraction", "Travel speed", "Infill pattern"],
+      "calibration": "Dimensioned first-layer test square",
+      "notes": ["Do not trade away adhesion too aggressively.", "If the whole part is oversized, diagnose flow instead."]
+    },
+    {
+      "id": "layer_shift",
+      "name": "Layer shift",
+      "summary": "The print suddenly offsets on X or Y partway through.",
+      "questions": [
+        {
+          "id": "shift_axis",
+          "text": "Is the shift mostly on one axis?",
+          "options": [
+            { "id": "x", "label": "X axis" },
+            { "id": "y", "label": "Y axis" },
+            { "id": "both", "label": "Both or not sure" }
+          ]
+        },
+        {
+          "id": "impact",
+          "text": "Did the nozzle hit curled plastic or a lifted edge?",
+          "options": [
+            { "id": "yes", "label": "Yes or likely" },
+            { "id": "no", "label": "No" },
+            { "id": "unknown", "label": "Not sure" }
+          ]
+        },
+        {
+          "id": "speed_recent",
+          "text": "Was speed or acceleration recently increased?",
+          "options": [
+            { "id": "yes", "label": "Yes" },
+            { "id": "no", "label": "No" },
+            { "id": "unknown", "label": "Not sure" }
+          ]
+        }
+      ],
+      "causes": [
+        { "title": "Belt slip or loose pulley on the shifted axis", "signals": ["shift_axis:x", "shift_axis:y"] },
+        { "title": "Nozzle collision knocked the print out of position", "signals": ["impact:yes", "impact:unknown"] },
+        { "title": "Motion settings exceed reliable limits", "signals": ["speed_recent:yes"] }
+      ],
+      "actions": [
+        "Check belt tension and pulley grub screws on the shifted axis.",
+        "Look for curled corners or over-extruded ridges that the nozzle could hit.",
+        "Reduce acceleration and travel speed, then rerun the failed region if possible."
+      ],
+      "guardrails": ["Nozzle temperature first", "Flow first", "Retraction first"],
+      "calibration": "Axis motion test cube",
+      "notes": ["Layer shifts are usually mechanical, motion, or collision problems.", "A repeated shift height often points to a model feature or collision."]
+    },
+    {
+      "id": "blobs_zits",
+      "name": "Blobs / zits",
+      "summary": "Small bumps appear on outer walls, often near seams or travel starts.",
+      "questions": [
+        {
+          "id": "blob_location",
+          "text": "Where do blobs appear?",
+          "options": [
+            { "id": "seam", "label": "Mostly on the seam" },
+            { "id": "random", "label": "Randomly around the part" },
+            { "id": "corners", "label": "Near corners or starts" }
+          ]
+        },
+        {
+          "id": "material_state",
+          "text": "Could the filament be wet or popping?",
+          "options": [
+            { "id": "yes", "label": "Yes or likely" },
+            { "id": "no", "label": "No" },
+            { "id": "unknown", "label": "Not sure" }
+          ]
+        },
+        {
+          "id": "seam_settings",
+          "text": "Have seam, pressure advance, or coasting settings been changed?",
+          "options": [
+            { "id": "yes", "label": "Yes" },
+            { "id": "no", "label": "No" },
+            { "id": "unknown", "label": "Not sure" }
+          ]
+        }
+      ],
+      "causes": [
+        { "title": "Seam start/stop pressure is not controlled", "signals": ["blob_location:seam", "seam_settings:yes", "seam_settings:unknown"] },
+        { "title": "Wet filament or inconsistent extrusion", "signals": ["blob_location:random", "material_state:yes", "material_state:unknown"] },
+        { "title": "Cornering or acceleration changes are leaving extra material", "signals": ["blob_location:corners"] }
+      ],
+      "actions": [
+        "Make the seam visible and aligned so you can confirm whether blobs follow it.",
+        "Dry filament before tuning seam compensation if popping or random blobs appear.",
+        "Tune pressure advance or coasting only after temperature and filament state are stable."
+      ],
+      "guardrails": ["Bed leveling", "Large flow changes", "Infill changes"],
+      "calibration": "Seam test cylinder",
+      "notes": ["Random bumps are a different clue than seam-aligned bumps.", "PETG often needs slower, calmer seam tuning than PLA."]
+    },
+    {
+      "id": "bridging",
+      "name": "Bridging failure",
+      "summary": "Plastic sags or drops when crossing open spans.",
+      "questions": [
+        {
+          "id": "span_length",
+          "text": "How long are the failed bridges?",
+          "options": [
+            { "id": "short", "label": "Short spans fail too" },
+            { "id": "long", "label": "Only longer spans fail" },
+            { "id": "unknown", "label": "Not sure" }
+          ]
+        },
+        {
+          "id": "cooling",
+          "text": "Is part cooling enabled and strong for bridges?",
+          "options": [
+            { "id": "yes", "label": "Yes" },
+            { "id": "low", "label": "Low or disabled" },
+            { "id": "unknown", "label": "Not sure" }
+          ]
+        },
+        {
+          "id": "bridge_speed",
+          "text": "Are bridge speed or bridge flow settings customized?",
+          "options": [
+            { "id": "yes", "label": "Yes" },
+            { "id": "default", "label": "Default" },
+            { "id": "unknown", "label": "Not sure" }
+          ]
+        }
+      ],
+      "causes": [
+        { "title": "Bridge cooling is too low", "signals": ["cooling:low", "cooling:unknown", "span_length:short"] },
+        { "title": "Bridge flow or speed needs tuning", "signals": ["bridge_speed:default", "span_length:long"] },
+        { "title": "Nozzle temperature is too hot for clean spans", "signals": ["span_length:short", "cooling:yes"] }
+      ],
+      "actions": [
+        "Increase bridge fan or part cooling for materials that tolerate it.",
+        "Lower bridge flow slightly if strands look thick and saggy.",
+        "Lower nozzle temperature by 5 C if even short bridges droop."
+      ],
+      "guardrails": ["Bed temperature", "Retraction", "First-layer Z offset"],
+      "calibration": "Bridge length test",
+      "notes": ["Some materials bridge poorly even when tuned.", "Model orientation can avoid impossible bridges."]
+    }
+  ]
+}

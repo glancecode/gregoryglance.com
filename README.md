@@ -20,6 +20,8 @@ gregoryglance.com/
 ├── greg_photo.jpg                # Profile photo
 ├── CNAME                         # Custom domain for GitHub Pages
 ├── _headers                      # Cache/header intent for static hosting/CDN parity
+├── tools/print-diagnostics/      # Free static 3D print diagnostics MVP
+├── cloudflare/print-diagnostics-worker/  # Worker route for tools subdomain
 ├── docs/website-design/          # Website rebuild and design decision context
 └── _archive/progressive-quality-care/  # Archived static website demo
 ```
@@ -30,6 +32,7 @@ gregoryglance.com/
 - Animated engineering-style ring graphic
 - Responsive down to mobile
 - Links out to [tools.gregoryglance.com](https://tools.gregoryglance.com) for live tools
+- Free 3D print diagnostics MVP source under `tools/print-diagnostics/`
 
 ## Security
 
@@ -87,4 +90,18 @@ Product specs, internal task state, raw logs, secrets, node_modules, unrelated O
 
 ## Tools subdomain
 
-Tools live at a separate subdomain (`tools.gregoryglance.com`) and are maintained in a separate repo. The "Now Building" section on this page links to individual tools.
+Tools live at a separate subdomain (`tools.gregoryglance.com`). The print diagnostics MVP in this repo is a static app routed by the Cloudflare Worker in `cloudflare/print-diagnostics-worker/`.
+
+Print diagnostics is intentionally free-first right now:
+- no payment copy
+- no account system
+- no `.3mf` upload requirement
+- no image diagnosis claim
+- local-only saved diagnosis history
+
+Deploy from the Worker folder when updating the live tools route:
+
+```sh
+cd cloudflare/print-diagnostics-worker
+wrangler deploy
+```

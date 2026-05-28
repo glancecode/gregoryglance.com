@@ -1,0 +1,16 @@
+name = "print-diagnostics"
+main = "src/index.ts"
+compatibility_date = "2026-05-01"
+
+[assets]
+directory = "../../tools/print-diagnostics"
+binding = "ASSETS"
+not_found_handling = "none"
+run_worker_first = true
+
+[[routes]]
+pattern = "tools.gregoryglance.com/tools/print-diagnostics*"
+zone_name = "gregoryglance.com"
+
+[observability]
+enabled = true

@@ -1,0 +1,9 @@
+{
+  "name": "3D Print Diagnostics",
+  "short_name": "Print Diagnostics",
+  "start_url": "/tools/print-diagnostics/",
+  "scope": "/tools/print-diagnostics/",
+  "display": "standalone",
+  "background_color": "#101510",
+  "theme_color": "#101510"
+}

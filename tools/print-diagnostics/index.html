@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>3D Print Diagnostics</title>
+    <meta
+      name="description"
+      content="Free first-pass troubleshooting for common FDM 3D print failures. Pick a defect, answer three questions, and get the next changes to try."
+    />
+    <meta name="theme-color" content="#111711" />
+    <link rel="manifest" href="./manifest.json" />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <div class="hero-copy">
+          <p class="eyebrow">3D print diagnostics</p>
+          <h1>Find the defect. Get the next three changes to try.</h1>
+          <p class="lede">
+            A free first-pass troubleshooting tool for common FDM failures. Pick
+            the symptom, answer a few questions, and get an ordered fix plan
+            instead of wandering through forum threads.
+          </p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#intake">Start diagnosis</a>
+            <a class="button button-secondary" href="#examples">Preview examples</a>
+          </div>
+          <ul class="trust-list">
+            <li>Free, no login, no file upload</li>
+            <li>Deterministic rules, not vague AI guesses</li>
+            <li>Built for the defects that waste test prints</li>
+          </ul>
+        </div>
+        <aside class="scope-card" aria-label="Scope">
+          <p class="label">Best for</p>
+          <p>
+            Common FDM issues like stringing, weak first layers, warping,
+            blobs, ringing, and layer shifts.
+          </p>
+          <p class="label">Not trying to be</p>
+          <p>
+            Live printer monitoring, image diagnosis, slicer replacement, or
+            hardware repair advice.
+          </p>
+        </aside>
+      </header>
+
+      <nav class="stepper" aria-label="Diagnosis progress">
+        <a class="step-pill" href="#intake"><span>1</span><strong>Intake</strong></a>
+        <a class="step-pill" href="#questions"><span>2</span><strong>Narrow</strong></a>
+        <a class="step-pill" href="#results"><span>3</span><strong>Fix plan</strong></a>
+      </nav>
+
+      <main>
+        <section class="card" id="defects">
+          <div class="section-header">
+            <div>
+              <p class="section-kicker">Start narrow</p>
+              <h2>Supported defect families</h2>
+            </div>
+            <p>
+              The first version stays intentionally tight so the output can be
+              specific.
+            </p>
+          </div>
+          <div id="defect-chips" class="chip-grid" aria-live="polite"></div>
+        </section>
+
+        <section class="card" id="examples">
+          <div class="section-header">
+            <div>
+              <p class="section-kicker">See the answer first</p>
+              <h2>Example diagnoses</h2>
+            </div>
+            <p>
+              Open a sample result before entering your own print details.
+            </p>
+          </div>
+          <div id="example-list" class="example-grid"></div>
+        </section>
+
+        <section class="card" id="intake">
+          <div class="section-header">
+            <div>
+              <p class="section-kicker">Step 1</p>
+              <h2>Intake</h2>
+            </div>
+            <p>
+              Give the tool only the context it can use today. Optional fields
+              help the notes, but the defect family is the only required input.
+            </p>
+          </div>
+
+          <form id="intake-form" class="stack">
+            <div class="field-grid">
+              <label>
+                <span>Printer model</span>
+                <input name="printerModel" type="text" placeholder="Bambu A1, Ender 3 V2" />
+              </label>
+              <label>
+                <span>Filament material</span>
+                <input name="filamentMaterial" type="text" placeholder="PLA, PETG, ABS" />
+              </label>
+              <label>
+                <span>Nozzle size</span>
+                <input name="nozzleSize" type="text" placeholder="0.4 mm" />
+              </label>
+              <label>
+                <span>Profile or preset</span>
+                <input name="profileName" type="text" placeholder="Garage PLA profile" />
+              </label>
+            </div>
+
+            <label>
+              <span>Defect family</span>
+              <select id="defect-select" name="defectId" required>
+                <option value="">Choose the closest symptom</option>
+              </select>
+            </label>
+
+            <label>
+              <span>Optional note</span>
+              <textarea
+                name="note"
+                rows="3"
+                placeholder="Example: strings between towers, corners lifting, blobs near seam"
+              ></textarea>
+            </label>
+
+            <div class="button-row">
+              <button class="button button-primary" type="submit">Answer 3 quick questions</button>
+            </div>
+            <p id="intake-status" class="status-message" role="status"></p>
+          </form>
+        </section>
+
+        <section class="card hidden" id="questions">
+          <div class="section-header">
+            <div>
+              <p class="section-kicker">Step 2</p>
+              <h2>Help narrow the cause</h2>
+            </div>
+            <p>
+              These questions are scoped to the defect you picked, so repeated
+              answers like "No" and "Not sure" stay grouped correctly.
+            </p>
+          </div>
+          <div id="question-context" class="context-card"></div>
+          <form id="question-form" class="stack">
+            <div id="question-list" class="stack"></div>
+            <div class="button-row">
+              <button class="button button-secondary" type="button" id="back-to-intake">Back</button>
+              <button class="button button-primary" type="submit">See fix plan</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="card hidden" id="results">
+          <div class="section-header">
+            <div>
+              <p class="section-kicker">Step 3</p>
+              <h2>Fix plan</h2>
+            </div>
+            <p>
+              Change one thing at a time, then rerun the suggested calibration
+              print.
+            </p>
+          </div>
+
+          <div id="result-card" class="result-card"></div>
+          <div class="result-layout">
+            <section>
+              <p class="label">Next 1 to 3 changes</p>
+              <ol id="action-list" class="number-list"></ol>
+            </section>
+            <section>
+              <p class="label">If that does not fix it</p>
+              <ul id="backup-list" class="bullet-list"></ul>
+            </section>
+            <section>
+              <p class="label">What not to change yet</p>
+              <ul id="guardrail-list" class="bullet-list"></ul>
+            </section>
+            <section>
+              <p class="label">Calibration print</p>
+              <p id="calibration-print" class="callout"></p>
+            </section>
+          </div>
+
+          <aside class="save-panel">
+            <div>
+              <p class="label">Useful free extras</p>
+              <p>
+                Copy the result or save it locally in this browser. This is not
+                an account, paywall, or cloud sync.
+              </p>
+            </div>
+            <div class="button-row">
+              <button class="button button-secondary" type="button" id="copy-result">Copy result</button>
+              <button class="button button-secondary" type="button" id="save-result">Save locally</button>
+              <button class="button button-secondary" type="button" id="start-over">Run another diagnosis</button>
+            </div>
+            <p id="save-status" class="status-message" role="status"></p>
+            <div id="history-panel" class="history-panel"></div>
+          </aside>
+        </section>
+
+        <section class="card feedback-card">
+          <div class="section-header">
+            <div>
+              <p class="section-kicker">Make it better</p>
+              <h2>Did the first fix help?</h2>
+            </div>
+            <p>
+              The next milestone is learning which diagnoses actually help on
+              real printers.
+            </p>
+          </div>
+          <a class="button button-secondary" href="mailto:GregoryGlance@gmail.com?subject=Print%20diagnostics%20feedback">
+            Send feedback
+          </a>
+        </section>
+      </main>
+    </div>
+
+    <script src="./app.js" defer></script>
+  </body>
+</html>
