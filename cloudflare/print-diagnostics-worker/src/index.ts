@@ -44,7 +44,7 @@ function cachePolicy(pathname: string, contentType: string | null): string {
 
 async function assetResponse(request: Request, env: Env, assetPath: string): Promise<Response> {
   const url = new URL(request.url);
-  const assetUrl = new URL(assetPath, url);
+  const assetUrl = new URL(assetPath === "/index.html" ? "/" : assetPath, url);
   const response = await env.ASSETS.fetch(new Request(assetUrl.toString(), request));
   return new Response(response.body, {
     status: response.status,
