@@ -3,19 +3,6 @@ export interface Env {
 }
 
 const APP_BASE = "/tools/print-diagnostics";
-const LONG_CACHE_EXTENSIONS = new Set([
-  ".css",
-  ".js",
-  ".json",
-  ".png",
-  ".jpg",
-  ".jpeg",
-  ".webp",
-  ".svg",
-  ".ico",
-  ".woff",
-  ".woff2"
-]);
 
 function withCache(headers: Headers, value: string): Headers {
   const next = new Headers(headers);
@@ -26,20 +13,11 @@ function withCache(headers: Headers, value: string): Headers {
   return next;
 }
 
-function cachePolicy(pathname: string, contentType: string | null): string {
-  if (contentType?.includes("text/html")) {
-    return "public, max-age=0, must-revalidate";
-  }
-
-  const extension = pathname.includes(".")
-    ? pathname.slice(pathname.lastIndexOf(".")).toLowerCase()
-    : "";
-
-  if (LONG_CACHE_EXTENSIONS.has(extension)) {
-    return "public, max-age=31536000, immutable";
-  }
-
-  return "public, max-age=3600, stale-while-revalidate=86400";
+// Asset filenames here are not content-hashed (app.js, styles.css, rules.json),
+// so they must always revalidate. ETag makes this a cheap 304. Marking them
+// immutable previously pinned browsers to a stale, broken build for a year.
+function cachePolicy(): string {
+  return "public, max-age=0, must-revalidate";
 }
 
 async function assetResponse(request: Request, env: Env, assetPath: string): Promise<Response> {
@@ -48,7 +26,7 @@ async function assetResponse(request: Request, env: Env, assetPath: string): Pro
   const response = await env.ASSETS.fetch(new Request(assetUrl.toString(), request));
   return new Response(response.body, {
     status: response.status,
-    headers: withCache(response.headers, cachePolicy(assetPath, response.headers.get("content-type")))
+    headers: withCache(response.headers, cachePolicy())
   });
 }
 
