@@ -345,11 +345,15 @@ a:focus-visible {
 }
 
 .question-card legend {
+  float: left;
+  width: 100%;
   padding: 0;
+  margin-bottom: 6px;
   font-weight: 900;
 }
 
 .answer-list {
+  clear: both;
   display: grid;
   gap: 10px;
   margin-top: 14px;
