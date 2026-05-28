@@ -44,7 +44,16 @@ export default {
     }
 
     if (path === APP_BASE) {
-      return Response.redirect(`${url.origin}${APP_BASE}/`, 301);
+      // 302 + no-store: a 301 (or any redirect without Cache-Control) gets
+      // cached by browsers indefinitely, which previously pinned visitors to a
+      // stale redirect that bounced the tool to Rent vs Buy.
+      return new Response(null, {
+        status: 302,
+        headers: {
+          Location: `${url.origin}${APP_BASE}/`,
+          "Cache-Control": "no-store"
+        }
+      });
     }
 
     if (path === `${APP_BASE}/`) {
