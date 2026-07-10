@@ -12,3 +12,9 @@
 
 /tools/print-diagnostics/*
   Cache-Control: public, max-age=0, must-revalidate
+
+/tools/lockstep/*
+  Cache-Control: public, max-age=0, must-revalidate
+
+/tools/lockstep/assets/*
+  Cache-Control: public, max-age=31536000, immutable
