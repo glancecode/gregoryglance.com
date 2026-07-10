@@ -21,6 +21,7 @@ gregoryglance.com/
 ├── CNAME                         # Custom domain for GitHub Pages
 ├── _headers                      # Cache/header intent for static hosting/CDN parity
 ├── tools/print-diagnostics/      # Free static 3D print diagnostics MVP
+├── tools/lockstep/               # Browser puzzle game prototype
 ├── cloudflare/print-diagnostics-worker/  # Worker route for tools subdomain
 ├── docs/website-design/          # Website rebuild and design decision context
 └── _archive/progressive-quality-care/  # Archived static website demo
@@ -33,6 +34,7 @@ gregoryglance.com/
 - Responsive down to mobile
 - Links out to [tools.gregoryglance.com](https://tools.gregoryglance.com) for live tools
 - Free 3D print diagnostics MVP source under `tools/print-diagnostics/`
+- Lockstep puzzle game prototype at `/tools/lockstep/`
 
 ## Security
 
