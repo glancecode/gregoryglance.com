@@ -1,0 +1,18 @@
+{
+  "name": "Lockstep — Daily Puzzle",
+  "short_name": "Lockstep",
+  "description": "A fast daily puzzle where every move guides two tokens at once.",
+  "start_url": "/tools/lockstep/",
+  "scope": "/tools/lockstep/",
+  "display": "standalone",
+  "background_color": "#17191b",
+  "theme_color": "#17191b",
+  "icons": [
+    {
+      "src": "/tools/lockstep/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
